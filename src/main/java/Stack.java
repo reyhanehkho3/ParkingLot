@@ -1,47 +1,86 @@
 //this Stack class is implemented using LinkedList
 class Node{
-    public int data;
+    public Car car;
     public Node next;
 
-    public Node(int data){
-        this.data = data;
+    public Node(Car car){
+        this.car = car;
         next = null;
     }
 }
 public class Stack {
+    private int stackNumber;
     private Node top;
     private int capacity;
+    private static final Stack[] stacks;
+    static{
+        stacks = new Stack[5]; //n stacks that we are going to assume in qual to 5
+        stacks[0] = new Stack(10);//for now we assume the capacity (m) is 10
+        stacks[1] = new Stack(10);
+        stacks[2] = new Stack(10);
+        stacks[3] = new Stack(10);
+        stacks[4] = new Stack(10);
+    }
+
     public Stack(int m) {
         capacity = m;
         top = null;
     }
+
+
+
+    public int getStackNumber(){
+        return stackNumber;
+    }
+
     //O(1)
-    public void push(int size) {
-        Node temp = new Node(size);
+    public void push(Car car) {
+        Node temp = new Node(car);
         temp.next = top;
         top = temp;
         // what if the stack is full?
     }
     //O(1)
-    public int pop() {
+    public Car pop() {
         if (top == null) {
-            return -1; // stack in empty
+            return null; // stack in empty
         }
         Node temp = top;
         top = top.next;
-        int value = temp.data;
+        Car c = temp.car;
         temp = null;
-        return value;
+        return c;
     }
     //O(1)
     public int top() {//or peek
         if (top == null) {
             return -1; // stack is empty
         }
-        return top.data;
+        return top.car;
     }
     //O(1)
     public boolean isEmpty() {
         return (top == null);
     }
+
+    public int find(int carID){
+        //stack number
+        //which node the car is in
+    }
+
+    public static void mergeSort(int[] data, int low, int high){
+            if(data.length == 1){
+                return;
+            }
+            else{
+                int mid = (high + low) / 2;
+                mergeSort(data, 0, mid - 1);
+                mergeSort(data, mid+1, high);
+            }
+        }
+
+    public Stack findAvailableStack(){
+
+    }
+
 }

@@ -1,5 +1,5 @@
 public class Queue {
-    private int[] arr;
+    private Car[] arr;
     private int front;
     private int rear;
     private int size;
@@ -7,7 +7,7 @@ public class Queue {
 
     public Queue() {
         this.capacity = capacity;
-        arr = new int[capacity];
+        arr = new Car[capacity];
         front = 0;
         rear = -1;
         size = 0;
@@ -21,28 +21,34 @@ public class Queue {
         return size == capacity;
     }
 
-    public void enqueue(int n) {
+    public void enqueue(Car c) {
         if (isFull()) {
             return;
         }
         rear = (rear + 1) % capacity;
-        arr[rear] = n;
+        arr[rear] = c;
         size++;
     }
 
-    public int dequeue() {
+    public void dequeue() {
         if (isEmpty()) {
-            return -1;
+            System.out.println("There is no car remained");
         }
-        int removed = arr[front];
+        Car removed = arr[front];
         front = (front + 1) % capacity;
         size--;
-        return removed;
+        Stack found_stack = Stack.findAvailableStack();
+        if(found_stack == null){
+            System.out.println("Sorry, the parking is full");
+        }
+        else{
+            found_stack.push(removed);
+        }
     }
 
-    public int peek(){
+    public Car peek(){
         if (isEmpty()){
-            return -1;
+            return null;
         }
         return arr[front];
     }
