@@ -7,6 +7,22 @@ class Node{
         this.car = car;
         next = null;
     }
+
+    public Node getNext() {
+        return next;
+    }
+
+    public Car getCar() {
+        return car;
+    }
+
+    public void setNext(Node next) {
+        this.next = next;
+    }
+
+    public void setCar(Car car) {
+        this.car = car;
+    }
 }
 public class Stack {
     private int stackNumber;
@@ -52,9 +68,9 @@ public class Stack {
         return c;
     }
     //O(1)
-    public int top() {//or peek
+    public Car top() {//or peek
         if (top == null) {
-            return -1; // stack is empty
+            return null; // stack is empty
         }
         return top.car;
     }
