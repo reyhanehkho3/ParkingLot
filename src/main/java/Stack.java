@@ -25,20 +25,23 @@ class Node{
     }
 }
 public class Stack {
+    public Node head = null;
+    public Node tail = null;
     private int stackNumber;
     private Node top;
-    private int capacity;
+    private int capacity = 0;
     private static final Stack[] stacks;
     static{
         stacks = new Stack[5]; //n stacks that we are going to assume in qual to 5
-        stacks[0] = new Stack(10);//for now we assume the capacity (m) is 10
-        stacks[1] = new Stack(10);
-        stacks[2] = new Stack(10);
-        stacks[3] = new Stack(10);
-        stacks[4] = new Stack(10);
+        stacks[0] = new Stack(10, null);//for now we assume the capacity (m) is 10
+        stacks[1] = new Stack(10, null);
+        stacks[2] = new Stack(10, null);
+        stacks[3] = new Stack(10, null);
+        stacks[4] = new Stack(10, null);
     }
 
-    public Stack(int m) {
+    public Stack(int m, Node head) {
+        this.head = head;
         capacity = m;
         top = null;
     }
@@ -52,8 +55,13 @@ public class Stack {
     //O(1)
     public void push(Car car) {
         Node temp = new Node(car);
-        temp.next = top;
-        top = temp;
+        if(head == null){
+            head = temp;
+        }
+        else {
+            temp.next = top;
+            top = temp;
+        }
         // what if the stack is full?
     }
     //O(1)
