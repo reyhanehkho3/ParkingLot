@@ -4,5 +4,6 @@ public class Main {
         Scanner input = new Scanner(System.in);
         int n = input.nextInt();
         System.out.println("You entered " + n);
+        System.out.println();
     }
 }
