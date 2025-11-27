@@ -102,9 +102,28 @@ public class Stack {
                 mergeSort(data, mid+1, high);
             }
         }
+    public boolean isFull(Stack s) {
+        Node curr = head;
+        int pos = 0;
+        while (curr != null) {
+            pos++;
+            curr = curr.next;
+        }
+        if (pos == s.capacity) {
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 
     public Stack findAvailableStack(){
-
+        for(Stack s: stacks){
+            if(!isFull(s)){
+                return s;
+            }
+        }
+        return null;
     }
 
 }
