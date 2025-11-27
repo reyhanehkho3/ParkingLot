@@ -5,5 +5,6 @@ public class Main {
         int n = input.nextInt();
         System.out.println("You entered " + n);
         System.out.println();
+        System.out.println();
     }
 }
