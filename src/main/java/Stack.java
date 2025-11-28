@@ -65,7 +65,8 @@ public class Stack {
         // what if the stack is full?
     }
     //O(1)
-    public Car pop() {
+    public Car pop(int carID) {
+
         if (top == null) {
             return null; // stack in empty
         }
@@ -87,7 +88,7 @@ public class Stack {
         return (top == null);
     }
 
-    public void find(int carID){
+    public int find(int carID){
         for(Stack s: stacks){
             Node curr = head;
             int position = 1;
@@ -95,12 +96,11 @@ public class Stack {
                 curr = curr.getNext();
                 position++;
                 if(head.getCar().getCarID() == carID){
-                    System.out.println("The car is in stack number "+ s.stackNumber);
-                    System.out.println("The car is in place number "+ position);
-                    break;
+                    return s.stackNumber, position;
                 }
             }
             System.out.println("No car with such carID found.");
+            return -1;
         }
     }
 
