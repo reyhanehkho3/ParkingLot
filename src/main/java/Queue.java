@@ -22,8 +22,9 @@ public class Queue {
         return size == capacity;
     }
     Scanner input = new Scanner(System.in);
-    public void enqueueN(Car c, int StackNumber){
-        if (isFull()) {
+    public void enqueueN(Car c, int stackNumber){
+        Stack s = Stack.getStack(stackNumber);
+        if (s.isFull()) {
             System.out.println("Sorry, this section is full. Please choose another section:");
             enqueueN(c, input.nextInt());
         }

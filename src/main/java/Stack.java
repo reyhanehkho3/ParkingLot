@@ -114,14 +114,14 @@ public class Stack {
                 mergeSort(data, mid+1, high);
             }
         }
-    public static boolean isFull(Stack s) {
-        Node curr = s.head;
+    public boolean isFull() {
+        Node curr = head;
         int pos = 0;
         while (curr != null) {
             pos++;
             curr = curr.next;
         }
-        if (pos == s.capacity) {
+        if (pos == capacity) {
             return true;
         }
         else{
@@ -129,9 +129,17 @@ public class Stack {
         }
     }
 
+    public static Stack getStack(int stackNumber){
+        for(Stack s: stacks){
+            if(stackNumber == s.stackNumber){
+                return s;
+            }
+        }
+        return null;
+    }
     public static Stack findAvailableStack(){
         for(Stack s: stacks){
-            if(!isFull(s)){
+            if(!s.isFull()){
                 return s;
             }
         }
