@@ -87,9 +87,21 @@ public class Stack {
         return (top == null);
     }
 
-    public int find(int carID){
-        //stack number
-        //which node the car is in
+    public void find(int carID){
+        for(Stack s: stacks){
+            Node curr = head;
+            int position = 1;
+            while(curr != null){
+                curr = curr.getNext();
+                position++;
+                if(head.getCar().getCarID() == carID){
+                    System.out.println("The car is in stack number "+ s.stackNumber);
+                    System.out.println("The car is in place number "+ position);
+                    break;
+                }
+            }
+            System.out.println("No car with such carID found.");
+        }
     }
 
     public static void mergeSort(int[] data, int low, int high){
