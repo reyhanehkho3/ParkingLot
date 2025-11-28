@@ -1,3 +1,4 @@
+import java.util.Scanner;
 public class Queue {
     private Car[] arr;
     private int front;
@@ -19,6 +20,16 @@ public class Queue {
 
     public boolean isFull() {
         return size == capacity;
+    }
+    Scanner input = new Scanner(System.in);
+    public void enqueueN(Car c, int StackNumber){
+        if (isFull()) {
+            System.out.println("Sorry, this section is full. Please choose another section:");
+            enqueueN(c, input.nextInt());
+        }
+        rear = (rear + 1) % capacity;
+        arr[rear] = c;
+        size++;
     }
 
     public void enqueue(Car c) {
