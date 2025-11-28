@@ -114,8 +114,8 @@ public class Stack {
                 mergeSort(data, mid+1, high);
             }
         }
-    public boolean isFull(Stack s) {
-        Node curr = head;
+    public static boolean isFull(Stack s) {
+        Node curr = s.head;
         int pos = 0;
         while (curr != null) {
             pos++;
@@ -129,7 +129,7 @@ public class Stack {
         }
     }
 
-    public Stack findAvailableStack(){
+    public static Stack findAvailableStack(){
         for(Stack s: stacks){
             if(!isFull(s)){
                 return s;
