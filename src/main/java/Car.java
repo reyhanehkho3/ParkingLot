@@ -3,4 +3,8 @@ public class Car {
     public Car(int ID){
         carID = ID;
     }
+
+    public int getCarID() {
+        return carID;
+    }
 }
