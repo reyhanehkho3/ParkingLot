@@ -187,21 +187,13 @@ public class Stack {
                 stack2 = s;
             }
         }
-        Node curr2 = stack1.head;
-        Node curr = stack2.head;
-        Stack temp = new Stack(stack2.getCapacity(), stack2.head);
-        while(head != null){
-            temp.push(stack2.pop(curr.getCar().getCarID()));
-            curr = curr.getNext();
-        }
-        for(int i = 0; i < stack2.getCapacity();i++){
-            stack2.push(stack1.pop(curr.getCar().getCarID()));
-            curr2 = curr2.getNext();
-        }
-        Node curr3 = temp.head;
-        for(int i = 0; i < stack1.getCapacity(); i++){
-            stack1.push(temp.pop(curr3.getCar().getCarID()));
-            curr3 = curr3.getNext();
+        Node curr = stack1.head;
+        while(!stack1.isEmpty()){
+            while(!stacks[stackNumber2].isFull()){
+                stack2.push(stack1.pop(curr.getCar().getCarID()));
+                curr = curr.getNext();
+            }
+            stackNumber2++;
         }
     }
 
