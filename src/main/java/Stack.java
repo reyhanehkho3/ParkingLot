@@ -26,7 +26,6 @@ class Node{
 }
 public class Stack {
     public Node head = null;
-    public Node tail = null;
     private int stackNumber;
     private Node top;
     private int capacity = 0;
@@ -39,13 +38,18 @@ public class Stack {
         stacks[3] = new Stack(10, null);
         stacks[4] = new Stack(10, null);
     }
+    public Stack(){
+
+    }
 
     public Stack(int m, Node head) {
         this.head = head;
         capacity = m;
         top = null;
     }
-
+    public void setStackNumber(int stackNumber){
+        this.stackNumber = stackNumber;
+    }
 
 
     public int getStackNumber(){
@@ -66,15 +70,27 @@ public class Stack {
     }
     //O(1)
     public Car pop(int carID) {
-
-        if (top == null) {
+        int[] numbers = find(carID);
+        Stack stack = new Stack();
+        for(Stack s: stacks){
+            if(s.getStackNumber() == numbers[0]){
+                stack.setStackNumber(s.getStackNumber());
+                break;
+            }
+        }
+        if (stack.top == null) {
             return null; // stack in empty
         }
-        Node temp = top;
-        top = top.next;
-        Car c = temp.car;
-        temp = null;
-        return c;
+        else if(stack.head.getCar().getCarID() == carID){
+            Node temp = top;
+            top = top.next;
+            Car c = temp.car;
+            return c;//the car is permitted to leave
+        }
+        else{
+            System.out.println("It is not possible to exit the car.");
+        }
+    return null;
     }
     //O(1)
     public Car top() {//or peek
@@ -88,20 +104,20 @@ public class Stack {
         return (top == null);
     }
 
-    public int find(int carID){
-        for(Stack s: stacks){
+    public int[] find(int carID){
+        for(Stack s: stacks) {
             Node curr = head;
             int position = 1;
-            while(curr != null){
+            while (curr != null) {
                 curr = curr.getNext();
                 position++;
-                if(head.getCar().getCarID() == carID){
-                    return s.stackNumber, position;
+                if (head.getCar().getCarID() == carID) {
+                    return new int[]{s.stackNumber, position};
                 }
             }
-            System.out.println("No car with such carID found.");
-            return -1;
         }
+        System.out.println("No car with such carID found.");
+        return new int[] {-1, 1};
     }
 
     public static void mergeSort(int[] data, int low, int high){
