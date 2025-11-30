@@ -31,12 +31,12 @@ public class Stack {
     private int capacity = 0;
     private static final Stack[] stacks;
     static{
-        stacks = new Stack[5]; //n stacks that we are going to assume in qual to 5
-        stacks[0] = new Stack(10, null);//for now we assume the capacity (m) is 10
-        stacks[1] = new Stack(10, null);
-        stacks[2] = new Stack(10, null);
-        stacks[3] = new Stack(10, null);
-        stacks[4] = new Stack(10, null);
+        stacks = new Stack[5]; // we assume there are 5 stacks in the parking
+        for(int i = 0; i < 5; i++) {
+            stacks[i] = new Stack(10, null);
+            stacks[i].setStackNumber(i);
+        }
+
     }
     public Stack(){
 
@@ -64,12 +64,12 @@ public class Stack {
         Node temp = new Node(car);
         if(head == null){
             head = temp;
+            top = temp;
         }
         else {
             temp.next = top;
             top = temp;
         }
-        // what if the stack is full? It is handled in Queue class
     }
     //O(1)
     public Car pop(int carID) {

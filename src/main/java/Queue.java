@@ -7,7 +7,7 @@ public class Queue {
     private int capacity;
 
     public Queue() {
-        this.capacity = capacity;
+        capacity = 26;
         arr = new Car[capacity];
         front = 0;
         rear = -1;
