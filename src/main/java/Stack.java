@@ -119,13 +119,13 @@ public class Stack {
     public static int[] find(int carID){
         for(Stack s: stacks) {
             Node curr = s.head;
-            int position = 1;
+            int position = 0;
             while (curr != null) {
-                curr = curr.getNext();
-                position++;
-                if (s.head.getCar().getCarID() == carID) {
+                if (curr.getCar().getCarID() == carID) {
                     return new int[]{s.stackNumber, position};
                 }
+                curr = curr.getNext();
+                position++;
             }
         }
         System.out.println("No car with such carID found.");
