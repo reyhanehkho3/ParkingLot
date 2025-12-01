@@ -25,16 +25,20 @@ public class Queue {
 
     Scanner input = new Scanner(System.in);
 
-    public void dequeueN(int stackNumber){//N represents number. it means specific stack number
+    public void dequeueN(int stackNumber) {//N represents number. it means specific stack number
         Stack s = Stack.getStack(stackNumber);
-        if (s.isFull()) {
-            System.out.println("Sorry, this section is full. Please choose another section:");
-            dequeueN(input.nextInt());
+        if (s == null) {
+            System.out.println("Couldn't find stack.");
+        } else {
+            if (s.isFull()) {
+                System.out.println("Sorry, this section is full. Please choose another section:");
+                dequeueN(input.nextInt());
+            }
+            Car removed = arr[front];
+            front = (front + 1) % capacity;
+            size--;
+            s.push(removed);
         }
-        Car removed = arr[front];
-        front = (front + 1) % capacity;
-        size--;
-        s.push(removed);
     }
 
     public void enqueue(Car c) {

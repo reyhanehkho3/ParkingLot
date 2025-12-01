@@ -70,6 +70,7 @@ public class Stack {
         else {
             temp.next = top;
             top = temp;
+            head = top;
         }
     }
     //O(1)
@@ -155,7 +156,27 @@ public class Stack {
         else {
             Node curr = D.head;
             for (int i = 0; i < D.getCapacity(); i++) {
+                if(curr == null){
+                    continue;
+                }
                 System.out.println(curr.getCar().getCarID() + " ");
+                curr = curr.getNext();
+            }
+        }
+    }
+    public static void displayNumber(int stackNumber){
+        Stack D = stacks[stackNumber];
+        if(D.isEmpty()){
+            System.out.println("This section is empty.");
+        }
+        else {
+            Node curr = D.head;
+            for (int i = 0; i < D.getCapacity(); i++) {
+                if(curr == null){
+                    continue;
+                }
+                System.out.println(curr.getCar().getCarID() + " ");
+                curr = curr.getNext();
             }
         }
     }
