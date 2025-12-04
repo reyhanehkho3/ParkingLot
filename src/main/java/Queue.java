@@ -33,11 +33,13 @@ public class Queue {
             if (s.isFull()) {
                 System.out.println("Sorry, this section is full. Please choose another section:");
                 dequeueN(input.nextInt());
+                return;
             }
             Car removed = arr[front];
             front = (front + 1) % capacity;
             size--;
             s.push(removed);
+            System.out.println("The car entered successfully.");
         }
     }
 

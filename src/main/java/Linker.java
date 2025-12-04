@@ -11,7 +11,6 @@ public class Linker {
         car.setCarID(id);
         queue.enqueue(car);
         queue.dequeueN(stackNumber);
-        System.out.println("The car entered successfully.");
     }
     public void findCar(int id){
         int[] result = Stack.find(id);

@@ -48,6 +48,11 @@ public class Stack {
         capacity = m;
         top = null;
     }
+
+    public Stack(int capacity) {
+        this.capacity = capacity;
+    }
+
     public void setStackNumber(int stackNumber){
         this.stackNumber = stackNumber;
     }
@@ -100,9 +105,8 @@ public class Stack {
             System.out.println("It is not possible to exit the car. Enter another car ID:");
             Scanner input = new Scanner(System.in);
             int ID = input.nextInt();
-            Stack.pop(ID);
+            return Stack.pop(ID);
         }
-    return null;
     }
     //O(1)
     public Car top() {//or peek
@@ -129,17 +133,11 @@ public class Stack {
             }
         }
         System.out.println("No car with such carID found.");
-        return new int[] {-1, 1};
+        return new int[] {-1, -1};
     }
 
     public static Stack order(int stackNumber){
-        Stack c = new Stack();
-        for(Stack s: stacks){
-            if(s.getStackNumber() == stackNumber){
-                c = s;
-                break;
-            }
-        }
+        Stack c = stacks[stackNumber];
         c.head = MergeSort.mergeSort(c.head);
         Node curr = c.head;
         Stack result = new Stack(c.capacity, c.head);
@@ -155,12 +153,22 @@ public class Stack {
         }
         else {
             Node curr = D.head;
-            for (int i = 0; i < D.getCapacity(); i++) {
+            Stack temp = new Stack(D.getCapacity());
+            for(int i = 0; i < temp.getCapacity(); i++){
                 if(curr == null){
                     continue;
                 }
-                System.out.println(curr.getCar().getCarID() + " ");
-                curr = curr.getNext();
+                temp.push(curr.getCar());
+                curr = curr.next;
+            }
+            Node currr = temp.head;
+            for (int i = 0; i < temp.getCapacity(); i++) {
+                if(currr == null){
+                    continue;
+                }
+
+                System.out.println(currr.getCar().getCarID() + " ");
+                currr = currr.getNext();
             }
         }
     }
@@ -175,7 +183,9 @@ public class Stack {
                 if(curr == null){
                     continue;
                 }
-                System.out.println(curr.getCar().getCarID() + " ");
+                if(curr.getCar() != null) {
+                    System.out.println(curr.getCar().getCarID() + " ");
+                }
                 curr = curr.getNext();
             }
         }
@@ -215,18 +225,8 @@ public class Stack {
     }
 
     public static void relocate(int stackNumber1, int stackNumber2){
-        Stack stack1 = new Stack();
-        Stack stack2 = new Stack();
-        for(Stack s: stacks){
-            if(s.getStackNumber() == stackNumber1){
-                stack1 = s;
-            }
-        }
-        for(Stack s: stacks){
-            if(s.getStackNumber() == stackNumber2){
-                stack2 = s;
-            }
-        }
+        Stack stack1 = stacks[stackNumber1];
+        Stack stack2 = stacks[stackNumber2];
         Node curr = stack1.head;
         while(!stack1.isEmpty()){
             while(!stacks[stackNumber2].isFull()){
