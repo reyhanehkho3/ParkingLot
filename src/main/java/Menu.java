@@ -68,7 +68,10 @@ public class Menu {
     public void exitMenu(){
         System.out.println("Enter car ID:");
         int id = input.nextInt();
-        linker.exitCar(id);
+        if(Stack.pop(id) == null){
+            baseMenu();
+        }
+        linker.exitCar();
     }
 
     public void moveSectionMenu() {
@@ -98,10 +101,17 @@ public class Menu {
         int id = input.nextInt();
         linker.findCar(id);
     }
-    public void displayMenu(){
-        System.out.println("Enter section number:");
-        int stackNumber = input.nextInt();
-        linker.displayStack(stackNumber);
+    public void displayMenu() {
+        int stackNumber;
+        while (true) {
+            System.out.println("Enter section number:");
+            stackNumber = input.nextInt();
+            if (stackNumber >= 0 && stackNumber <= 4) {
+                break;
+            }
+            System.out.println("Please enter between 0 to 4.");
+        }
+            linker.displayStack(stackNumber);
     }
     public void exit(){
         System.exit(0);

@@ -1,4 +1,6 @@
+import java.util.Scanner;
 public class Linker {
+    Scanner input = new Scanner(System.in);
     Queue queue = new Queue();
     public void enter(int id){
         Car car = new Car();
@@ -16,8 +18,7 @@ public class Linker {
         int[] result = Stack.find(id);
         System.out.println("The car is at section: " + result[0] + ", and place number: " + result[1]);
     }
-    public void exitCar(int id){
-        Stack.pop(id);
+    public void exitCar(){
         System.out.println("Car exited successfully.");
     }
     public void moveStack(int stackNumber1, int stackNumber2){
@@ -28,6 +29,7 @@ public class Linker {
         return Stack.order(stackNumber);
     }
     public void displayStack(int stackNumber){
+
         Stack.displayNumber(stackNumber);
     }
 

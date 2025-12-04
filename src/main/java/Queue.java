@@ -52,6 +52,8 @@ public class Queue {
         size++;
     }
 
+
+
     public void dequeue() {
         if (isEmpty()) {
             System.out.println("There is no car remained");
@@ -62,9 +64,11 @@ public class Queue {
         Stack found_stack = Stack.findAvailableStack();
         if(found_stack == null){
             System.out.println("Sorry, the parking is full");
+            enqueue(removed);
         }
         else{
             found_stack.push(removed);
+            System.out.println("The car entered successfully.");
         }
     }
 

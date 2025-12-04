@@ -1,30 +1,5 @@
 //this Stack class is implemented using LinkedList
 import java.util.Scanner;
-class Node{
-    public Car car;
-    public Node next;
-
-    public Node(Car car){
-        this.car = car;
-        next = null;
-    }
-
-    public Node getNext() {
-        return next;
-    }
-
-    public Car getCar() {
-        return car;
-    }
-
-    public void setNext(Node next) {
-        this.next = next;
-    }
-
-    public void setCar(Car car) {
-        this.car = car;
-    }
-}
 public class Stack {
     public Node head = null;
     private int stackNumber;
@@ -32,9 +7,9 @@ public class Stack {
     private int capacity = 0;
     private static final Stack[] stacks;
     static{
-        stacks = new Stack[5]; // we assume there are 5 stacks in the parking
+        stacks = new Stack[5]; // we assume there are 5 stacks in the parking, n = 5
         for(int i = 0; i < 5; i++) {
-            stacks[i] = new Stack(10, null);
+            stacks[i] = new Stack(5, null); //we assume m = 5
             stacks[i].setStackNumber(i);
         }
 
@@ -81,6 +56,10 @@ public class Stack {
     //O(1)
     public static Car pop(int carID) {
         int[] numbers = find(carID);
+        if(numbers[0] == -1 || numbers[1] == -1){
+            System.out.println("No car with such carID found.");
+            return null;
+        }
         Stack stack = stacks[numbers[0]];
         if (stack.top == null) {
             return null; // stack in empty
@@ -132,7 +111,6 @@ public class Stack {
                 position++;
             }
         }
-        System.out.println("No car with such carID found.");
         return new int[] {-1, -1};
     }
 
@@ -296,5 +274,5 @@ public class Stack {
             // Merge the two sorted halves
             return merge(head, second);
         }
-        }
     }
+}
