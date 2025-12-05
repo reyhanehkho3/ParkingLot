@@ -3,25 +3,18 @@ import java.util.Scanner;
 public class Stack {
     public Node head = null;
     private int stackNumber;
-    private Node top;
     private int capacity = 0;
     private static final Stack[] stacks;
     static{
         stacks = new Stack[5]; // we assume there are 5 stacks in the parking, n = 5
         for(int i = 0; i < 5; i++) {
-            stacks[i] = new Stack(5, null); //we assume m = 5
+            stacks[i] = new Stack(5); //we assume m = 5
             stacks[i].setStackNumber(i);
         }
 
     }
-    public Stack(){
-
-    }
-
-    public Stack(int m, Node head) {
-        this.head = head;
-        capacity = m;
-        top = null;
+    public Stack() {
+        this.capacity = 5;
     }
 
     public Stack(int capacity) {
@@ -41,19 +34,26 @@ public class Stack {
     }
 
     //O(1)
-    public void push(Car car) {
+    public void push(Car car) {//it's the same as the addFirst function in linked list
         Node temp = new Node(car);
         if(head == null){
             head = temp;
-            top = temp;
         }
         else {
-            temp.next = top;
-            top = temp;
-            head = top;
+            temp.next = head;
+            head = temp;
         }
     }
     //O(1)
+    public Car pop(){
+        if(head == null){
+            return null; //stack is empty
+        }
+        Node temp = head;
+        head= head.getNext();
+        return temp.getCar();
+    }
+    //remove a car by id
     public static Car pop(int carID) {
         int[] numbers = find(carID);
         if(numbers[0] == -1 || numbers[1] == -1){
@@ -61,24 +61,11 @@ public class Stack {
             return null;
         }
         Stack stack = stacks[numbers[0]];
-        if (stack.top == null) {
-            return null; // stack in empty
+        if (stack.head == null) {
+            return null; // stack is empty
         }
-        else if(stack.top.getCar().getCarID() == carID){
-            Node temp = stack.top;
-            stack.top = stack.top.next;
-
-            //update head if we're removing the last node
-            if (stack.top == null) {
-                stack.head = null;
-            }
-            //if head was pointing to the same node as top, update head
-            else if (stack.head == temp) {
-                stack.head = stack.top;
-            }
-
-            Car c = temp.car;
-            return c; // the car is permitted to leave
+        if(stack.head.getCar().getCarID() == carID){//if the car is at the top
+            return stack.pop();
         }
         else{
             System.out.println("It is not possible to exit the car. Enter another car ID:");
@@ -89,14 +76,14 @@ public class Stack {
     }
     //O(1)
     public Car top() {//or peek
-        if (top == null) {
+        if (head == null) {
             return null; // stack is empty
         }
-        return top.car;
+        return head.getCar();
     }
     //O(1)
     public boolean isEmpty() {
-        return (top == null);
+        return (head == null);
     }
 
     public static int[] find(int carID){
@@ -117,13 +104,27 @@ public class Stack {
     public static Stack order(int stackNumber){
         Stack c = stacks[stackNumber];
         c.head = MergeSort.mergeSort(c.head);
+        Stack result = new Stack(c.capacity);
+        result.setStackNumber(stackNumber);
+        // since push adds to head, we need to reverse the sorted list to maintain order
+        // first, we reverse the sorted list
+        Node reversedHead = null;
         Node curr = c.head;
-        Stack result = new Stack(c.capacity, c.head);
-        while(curr != null){
-            result.push(curr.getCar());
-            curr = curr.getNext();
+        while (curr != null) {
+            Node next = curr.next;
+            curr.next = reversedHead;
+            reversedHead = curr;
+            curr = next;//??
         }
-        return (result);
+        // now push from reversed list to get correct stack order
+        curr = reversedHead;
+        while (curr != null) {
+            result.push(curr.getCar());
+            curr = curr.next;
+        }
+        // update the original stack
+        stacks[stackNumber] = result;
+        return result;
     }
     public static void display(Stack D){
         if(D.isEmpty()){
@@ -131,24 +132,11 @@ public class Stack {
         }
         else {
             Node curr = D.head;
-            Stack temp = new Stack(D.getCapacity());
-            for(int i = 0; i < temp.getCapacity(); i++){
-                if(curr == null){
-                    continue;
-                }
-                temp.push(curr.getCar());
-                curr = curr.next;
+           while(curr != null){
+               System.out.println(curr.getCar().getCarID() + " ");
+               curr = curr.getNext();
+           }
             }
-            Node currr = temp.head;
-            for (int i = 0; i < temp.getCapacity(); i++) {
-                if(currr == null){
-                    continue;
-                }
-
-                System.out.println(currr.getCar().getCarID() + " ");
-                currr = currr.getNext();
-            }
-        }
     }
     public static void displayNumber(int stackNumber){
         Stack D = stacks[stackNumber];
@@ -157,13 +145,8 @@ public class Stack {
         }
         else {
             Node curr = D.head;
-            for (int i = 0; i < D.getCapacity(); i++) {
-                if(curr == null){
-                    continue;
-                }
-                if(curr.getCar() != null) {
-                    System.out.println(curr.getCar().getCarID() + " ");
-                }
+            while (curr != null) {
+                System.out.println(curr.getCar().getCarID() + " ");
                 curr = curr.getNext();
             }
         }
@@ -177,22 +160,16 @@ public class Stack {
             pos++;
             curr = curr.next;
         }
-        if (pos == capacity) {
-            return true;
-        }
-        else{
-            return false;
-        }
+        return pos == capacity;
     }
 
     public static Stack getStack(int stackNumber){
-        for(Stack s: stacks){
-            if(stackNumber == s.stackNumber){
-                return s;
-            }
+        if(stackNumber >= 0 && stackNumber < stacks.length) {
+            return stacks[stackNumber];
         }
         return null;
     }
+
     public static Stack findAvailableStack(){
         for(Stack s: stacks){
             if(!s.isFull()){
@@ -205,14 +182,25 @@ public class Stack {
     public static void relocate(int stackNumber1, int stackNumber2){
         Stack stack1 = stacks[stackNumber1];
         Stack stack2 = stacks[stackNumber2];
-        Node curr = stack1.head;
-        while(!stack1.isEmpty()){
-            while(!stacks[stackNumber2].isFull()){
-                stack2.push(stack1.pop(curr.getCar().getCarID()));
-                curr = curr.getNext();
+        while(!stack1.isEmpty() && !stack2.isFull()){
+            Car car = stack1.pop();
+            if(car != null){
+                stack2.push(car);
             }
-            stackNumber2++;
         }
+        if(!stack1.isEmpty()){
+            for(int i = 0; i < stacks.length; i++){
+                if(i != stackNumber2 && !stacks[i].isFull()){
+                    while(!stack1.isEmpty() && !stacks[i].isFull()){
+                        Car car = stack1.pop();
+                        if(car != null){
+                            stacks[i].push(car);
+                        }
+                    }
+                }
+            }
+        }
+
     }
 
 
