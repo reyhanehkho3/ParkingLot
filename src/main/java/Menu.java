@@ -55,19 +55,19 @@ public class Menu {
     }
     public void enterCertainSectionMenu(){
         System.out.println("Enter car ID: ");
-        int id = input.nextInt();
+        int id = checkInput(input.nextInt());
         System.out.println("Enter section ID: ");
         int stackNumber = input.nextInt();
         linker.enterCertain(id, stackNumber);
     }
     public void enterNotCertainSectionMenu() {
         System.out.println("Enter car ID: ");
-        int id = input.nextInt();
+        int id = checkInput(input.nextInt());
         linker.enter(id);
     }
     public void exitMenu(){
         System.out.println("Enter car ID:");
-        int id = input.nextInt();
+        int id = checkInput(input.nextInt());
         if(Stack.pop(id) == null){
             baseMenu();
         }
@@ -98,7 +98,7 @@ public class Menu {
     }
     public void findMenu() {
         System.out.println("Enter car ID:");
-        int id = input.nextInt();
+        int id = checkInput(input.nextInt());
         linker.findCar(id);
     }
     public void displayMenu() {
@@ -115,5 +115,15 @@ public class Menu {
     }
     public void exit(){
         System.exit(0);
+    }
+
+
+    public int checkInput(int n){
+        int[] number= Stack.find(n);
+        if(number[0] != -1 && number[1] != -1){
+            System.out.println("Repeated id. Please enter another");
+            return checkInput(input.nextInt());
+        }
+        return n;
     }
 }
