@@ -200,7 +200,7 @@ public class Stack {
     }
 
 
-    class MergeSort{
+    static class MergeSort{
         public static Node split(Node head){
             Node fast = head;// Move fast pointer two steps
             Node slow = head;//Move slow pointer one step until fast reaches the end
