@@ -68,10 +68,8 @@ public class Stack {
             return stack.pop();
         }
         else{
-            System.out.println("It is not possible to exit the car. Enter another car ID:");
-            Scanner input = new Scanner(System.in);
-            int ID = input.nextInt();
-            return Stack.pop(ID);
+            System.out.println("It is not possible to exit the car. ");
+            return null;
         }
     }
     //O(1)
@@ -242,7 +240,7 @@ public class Stack {
                 return second;
             }
         }
-
+        //O(nlong)
         // Function to perform merge sort on a singly linked list
         static Node mergeSort(Node head) {
 
