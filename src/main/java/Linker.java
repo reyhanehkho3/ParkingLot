@@ -22,8 +22,13 @@ public class Linker {
         System.out.println("Car exited successfully.");
     }
     public void moveStack(int stackNumber1, int stackNumber2){
-        Stack.relocate(stackNumber1, stackNumber2);
-        System.out.println("The section moved successfully.");
+        int a = Stack.relocate(stackNumber1, stackNumber2);
+        if(a == 0){
+            System.out.println("The section moved successfully.");
+        }
+        else{
+            System.out.println("There is no space remained to put the car. The remained cars stay at their section.");
+        }
     }
     public Stack orderStack(int stackNumber){
         return Stack.order(stackNumber);

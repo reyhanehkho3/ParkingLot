@@ -177,28 +177,26 @@ public class Stack {
         return null;
     }
 
-    public static void relocate(int stackNumber1, int stackNumber2){
+    public static int relocate(int stackNumber1, int stackNumber2){
+        int flag = 0;
         Stack stack1 = stacks[stackNumber1];
-        Stack stack2 = stacks[stackNumber2];
-        while(!stack1.isEmpty() && !stack2.isFull()){
-            Car car = stack1.pop();
-            if(car != null){
-                stack2.push(car);
-            }
-        }
-        if(!stack1.isEmpty()){
-            for(int i = 0; i < stacks.length; i++){
-                if(i != stackNumber2 && !stacks[i].isFull()){
-                    while(!stack1.isEmpty() && !stacks[i].isFull()){
-                        Car car = stack1.pop();
-                        if(car != null){
-                            stacks[i].push(car);
-                        }
-                    }
+        Node curr = stack1.head;
+        while(!stack1.isEmpty()) {
+            while (!stacks[stackNumber2].isFull() && curr != null) {
+                stacks[stackNumber2].push(stack1.pop(curr.getCar().getCarID()));
+                curr = curr.getNext();
+                if(stacks[stackNumber2].isFull()){
+                    break;
                 }
             }
-        }
+            stackNumber2++;
+            if(getStack(stackNumber2) == null && !stack1.isEmpty()){
+                flag = 1;
+                break;
+            }
 
+        }
+        return flag;
     }
 
 
